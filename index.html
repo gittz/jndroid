@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="src/jndroid.animation.js"></script>
+    <script src="src/jndroid.core.js"></script>
+    <script src="src/jndroid.layout.js"></script>
+    <script src="src/jndroid.widget.js"></script>
+    <script src="src/jndroid.mwidget.js"></script>
+    <script src="src/ListView.js"></script>
+</head>
+<body>
+<script>
+    var listView = new ListView(ListItem);
+    listView.setBorder(1, 0x33000000);
+
+    /* 构造models */
+    var models = [];
+    for (var i = 0; i < 100000; i++) {
+        models.add(i);
+    }
+
+    /* 加载models */
+    listView.add(models);
+
+    /* 自定义ListView中item的实现 */
+    function ListItem() {
+        Button.apply(this);
+
+        var model;
+        this.setOnClickListener(function() {
+            alert(model);
+        });
+        var lp = new LayoutParams(LayoutParams.FILL_PARENT, 48);
+        this.setLayoutParams(lp);
+
+        /* ListView的item通过实现setModel来更新自身数据 */
+        this.setModel = function(m) {
+            model = m;
+            this.setText(m);
+        }
+    }
+    setContentView(listView);
+</script>
+</body>
+</html>
